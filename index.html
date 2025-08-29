@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+	<title>Documentation</title>
+	<meta name="description" content="">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/doc.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="main row d-flex">
+      <div class="col-2">
+        <div class="position-sticky top-0 start-0">
+          <ol class="pt-3">
+            <li class="mb-2">
+              <a href="#docs" class="link-dark">Tài liệu</a>
+            </li>
+            <li class="mb-2">
+              <a href="#requirement" class="link-dark">Yêu cầu</a>
+            </li>
+            <li class="mb-2">
+              <a href="#setup" class="link-dark">Cài đặt</a>
+            </li>
+            <li class="mb-2">
+              <a href="#pages" class="link-dark">Tạo page</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="col-10 border-start">
+        <div class="pt-4 ps-4">
+
+          <div class="block mb-5" id="docs">
+            <h3>1. Tài liệu</h3>
+            <div class="border rounded p-3 bg-light">
+              <ul class="mb-0">
+                <li>EC-Cube: <a href="https://doc4.ec-cube.net/" target="blank">https://doc4.ec-cube.net/</a></li>
+                <li>Symfony: <a href="https://symfony.com/doc/current/index.html" target="blank">https://symfony.com/doc/current/index.html</a></li>
+                <li>Twig: <a href="https://twig.symfony.com/doc/3.x/" target="blank">https://twig.symfony.com/doc/3.x/</a></li>
+                <li>Doctrine: <a href="https://www.doctrine-project.org/projects/doctrine-orm/en/3.5/index.html" target="blank">https://www.doctrine-project.org/projects/doctrine-orm/en/3.5/index.html</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="block mb-5" id="requirement">
+            <h3>2. Yêu cầu</h3>
+            <p>Yêu cầu hệ thống: <a href="https://doc4.ec-cube.net/quickstart/requirement" target="_blank">https://doc4.ec-cube.net/quickstart/requirement</a></p>
+            <div class="border rounded p-3 bg-light">
+              <table class="table mb-0">
+                <tr>
+                  <th>Apache</th>
+                  <td>2.4.x (mod_rewrite / mod_ssl)</td>
+                </tr>
+                <tr>
+                  <th>PHP</th>
+                  <td>8.1 〜 8.3</td>
+                </tr>
+                <tr>
+                  <th>MySQL</th>
+                  <td>8.0(InnoDB Engine)</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="block mb-5" id="setup">
+            <h3>3. Cài đặt</h3>
+            <p>Alive template cho EC-Cube: <a href="https://bitbucket.org/alivejapanandvietnam/template-ec/src/develop/" target="_blank">https://bitbucket.org/alivejapanandvietnam/template-ec/src/develop/</a></p>
+            <p>Do template dựa trên phiên bản EC-Cube cũ nên cần phải xoá những thư mục cũ</p>
+            <div class="border rounded p-3 text-center mb-4 bg-light">
+              <img src="./assets/img/alive-template-folder-default.png" width="719" height="365" alt="">
+            </div>
+            <p>Download source mới nhất: <a href="https://github.com/EC-CUBE/ec-cube/releases" target="_blank">https://github.com/EC-CUBE/ec-cube/releases</a></p>
+            <p>Copy thư mục mới vào alive template</p>
+            <div class="border rounded p-3 text-center mb-4 bg-light">
+              <img src="./assets/img/folder-ec-cube.png" width="719" height="735" alt="">
+            </div>
+            <p>Chạy link cài đặt http://***/install/step1</p>
+          </div>
+
+          <div class="block mb-5" id="pages">
+            <h3>4. Tạo page</h3>
+            <p>Để tạo một page thì cần tạo một controller</p>
+            <p>Một controller có thể khai báo nhiều page</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+  <script src="assets/js/doc.js"></script>
+</body>
+</html>
