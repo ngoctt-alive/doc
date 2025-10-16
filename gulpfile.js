@@ -8,7 +8,8 @@ function browserSync(done){
 	browsersync.init({
     server: {
       baseDir: "./",
-      directory: true
+      //directory: true,
+      index: "index.html"
     },
     open: true
   });

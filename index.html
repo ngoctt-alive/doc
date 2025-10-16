@@ -35,7 +35,16 @@
               <a href="#setup" class="link-dark">Cài đặt</a>
             </li>
             <li class="mb-2">
-              <a href="#pages" class="link-dark">Tạo page</a>
+              <a href="#pages" class="link-dark">Controller, Template</a>
+            </li>
+            <li class="mb-2">
+              <a href="#entity" class="link-dark">Entity, Repository</a>
+            </li>
+            <li class="mb-2">
+              <a href="#getdata" class="link-dark">Hiển thị dữ liệu</a>
+            </li>
+            <li class="mb-2">
+              <a href="#product" class="link-dark">Product</a>
             </li>
           </ol>
         </div>
@@ -43,7 +52,7 @@
       <div class="col-10 border-start">
         <div class="pt-4 ps-4">
 
-          <div class="block mb-5" id="docs">
+          <div class="block" id="docs">
             <h3>1. Tài liệu</h3>
             <div class="border rounded p-3 bg-light">
               <ul class="mb-0">
@@ -55,7 +64,9 @@
             </div>
           </div>
 
-          <div class="block mb-5" id="requirement">
+          <hr class="mt-5 mb-5">
+
+          <div class="block" id="requirement">
             <h3>2. Yêu cầu</h3>
             <p>Yêu cầu hệ thống: <a href="https://doc4.ec-cube.net/quickstart/requirement" target="_blank">https://doc4.ec-cube.net/quickstart/requirement</a></p>
             <div class="border rounded p-3 bg-light">
@@ -76,25 +87,335 @@
             </div>
           </div>
 
-          <div class="block mb-5" id="setup">
+          <hr class="mt-5 mb-5">
+
+          <div class="block" id="setup">
             <h3>3. Cài đặt</h3>
             <p>Alive template cho EC-Cube: <a href="https://bitbucket.org/alivejapanandvietnam/template-ec/src/develop/" target="_blank">https://bitbucket.org/alivejapanandvietnam/template-ec/src/develop/</a></p>
             <p>Do template dựa trên phiên bản EC-Cube cũ nên cần phải xoá những thư mục cũ</p>
             <div class="border rounded p-3 text-center mb-4 bg-light">
-              <img src="./assets/img/alive-template-folder-default.png" width="719" height="365" alt="">
+              <img loading="lazy" src="./assets/img/alive-template-folder-default.png" width="719" height="365" alt="">
             </div>
             <p>Download source mới nhất: <a href="https://github.com/EC-CUBE/ec-cube/releases" target="_blank">https://github.com/EC-CUBE/ec-cube/releases</a></p>
             <p>Copy thư mục mới vào alive template</p>
             <div class="border rounded p-3 text-center mb-4 bg-light">
-              <img src="./assets/img/folder-ec-cube.png" width="719" height="735" alt="">
+              <img loading="lazy" src="./assets/img/folder-ec-cube.png" width="719" height="735" alt="">
             </div>
             <p>Chạy link cài đặt http://***/install/step1</p>
           </div>
 
-          <div class="block mb-5" id="pages">
-            <h3>4. Tạo page</h3>
-            <p>Để tạo một page thì cần tạo một controller</p>
-            <p>Một controller có thể khai báo nhiều page</p>
+          <hr class="mt-5 mb-5">
+
+          <div class="block" id="pages">
+            <h3>4. Controller, Template</h3>
+            <p>Tạo Controller trong thư mục "dist/app/Customize/Controller/FaqController.php"<br>
+            Tạo Template trong thư mục "dist/app/template/default/faq.twig"</p>
+            <p>@Route : khai báo url<br> @Template : khai báo file template</p>
+            <div class="border rounded p-3 bg-light mb-3">
+              <code>
+                namespace Customize\Controller;<br>
+                <br>
+                use Eccube\Controller\AbstractController;<br>
+                use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;<br>
+                use Symfony\Component\Routing\Annotation\Route;<br>
+                <br>
+                class FaqController extends AbstractController<br>
+                {<br>
+                 <div class="ms-4">
+                    /**<br>
+                    * @Route("/faq", name="page_faq")<br>
+                    * @Template("faq.twig")<br>
+                    */<br>
+                    public function page_faq()<br>
+                    {<br>
+                      <div class="ms-4">return [];<br></div>
+                    }<br>
+                 </div>
+                }
+              </code>
+            </div>
+            <div class="border rounded p-3 bg-light">
+              <code>
+                {% include 'Block/head.twig' %}<br>
+                &lt;link rel="stylesheet" href="{{ asset('assets/css/page/faq.min.css') }}"&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;body id="faq" class="faq"&gt;<br>
+                  <div class="ms-4">
+                    {% include 'Block/header.twig' %}<br>
+                    &lt;div id="wrap"&gt;<br>
+                    <div class="ms-4">This is page faq<br></div>
+                    &lt;/div&gt;<br>
+                    {% include 'Block/footer.twig' %}<br>
+                  </div>
+                &lt;body&gt;<br>
+                &lt;/html&gt;
+              </code>
+            </div>
+          </div>
+
+          <hr class="mt-5 mb-5">
+
+          <div clas="block" id="entity">
+            <h3>5. Entity, Repository</h3>
+            
+            <p>Trong EC-Cube có 2 table prefix "dtb_" và "mtb_"</p>
+            <p>Đối với table "mtb_" là dạng đơn giản chỉ có các cột ("id, name, sort_no") <br>
+            Trong trang "Admin" có phần quản lý, chỉnh sửa dữ liệu sẵn cho những table dạng mtb_ này
+            </p>
+
+            <p>Dưới đây tạo dạng dtb_ vì có nhiều hơn một cột so với mtb_ ("id, title, content, sort_no")</p>
+
+            <p>Tạo Entity trong thư mục "dist/app/Customize/Entity/Faq.php"<br>
+            Tạo Repository trong thư mục "dist/app/Customize/Repository/FaqRepository.php"</p>
+
+            <div class="border rounded p-3 bg-light mb-3">
+              <code>
+                namespace Customize\Repository;<br>
+                <br>
+                use Doctrine\Persistence\ManagerRegistry as RegistryInterface;<br>
+                use Eccube\Repository\AbstractRepository;<br>
+                use Customize\Entity\Faq;<br>
+                <br>
+                class FaqRepository extends AbstractRepository<br>
+                {<br>
+                 <div class="ms-4">
+                    public function __construct(RegistryInterface $registry)<br>
+                    {<br>
+                      <div class="ms-4">parent::__construct($registry, Faq::class);<br></div>
+                    }<br>
+                 </div>
+                }
+              </code>
+            </div>
+
+            <div class="border rounded p-3 bg-light mb-3">
+              <code>
+                namespace Customize\Entity;<br>
+                <br>
+                use Doctrine\ORM\Mapping as ORM;<br>
+                <br>
+                /**<br>
+                * Faq<br>
+                *<br>
+                * @ORM\Table(name="dtb_faq")<br>
+                * @ORM\InheritanceType("SINGLE_TABLE")<br>
+                * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)<br>
+                * @ORM\HasLifecycleCallbacks()<br>
+                * @ORM\Entity(repositoryClass="Eccube\Repository\FaqRepository")<br>
+                */<br>
+                class Faq extends \Eccube\Entity\AbstractEntity<br>
+                {<br>
+                  <div class="ms-4">
+                    /**<br>
+                    * @ORM\Column(name="id", type="integer", options={"unsigned":true})<br>
+                    * @ORM\Id<br>
+                    * @ORM\GeneratedValue(strategy="IDENTITY")<br>
+                    */<br>
+                    private $id;<br>
+                    <br>
+                    /* @ORM\Column(name="title", type="string", length=255) */<br>
+                    private $title;<br>
+                    <br>
+                    /* @ORM\Column(name="content", type="text", nullable=true) */<br>
+                    private $content;<br>
+                    <br>
+                    /* @ORM\Column(name="sort_no", type="integer", options={"default":0}) */<br>
+                    private $sort_no;<br>
+                    <br>
+                    public function getId()<br>
+                    {<br>
+                      <div class="ms-4">return $this->id;<br></div>
+                    }<br>
+                    <br>
+                    public function getTitle()<br>
+                    {<br>
+                      <div class="ms-4">return $this->title;<br></div>
+                    }<br>
+                    <br>
+                    public function setTitle($title)<br>
+                    {<br>
+                      <div class="ms-4">
+                        $this->title = $title;<br>
+                        return $this;<br>
+                      </div>
+                    }<br>
+                    <br>
+                    public function getContent()<br>
+                    {<br>
+                      <div class="ms-4">return $this->content;<br></div>
+                    }<br>
+                    <br>
+                    public function setContent($content)<br>
+                    {<br>
+                      <div class="ms-4">
+                        $this->content = $content;<br>
+                        return $this;<br>
+                      </div>
+                    }<br>
+                    <br>
+                    public function getSortNo()<br>
+                    {<br>
+                      <div class="ms-4">return $this->sort_no;<br></div>
+                    }<br>
+                    <br>
+                    public function setSortNo($sort_no)<br>
+                    {<br>
+                      <div class="ms-4">
+                        $this->sort_no = $sort_no;<br>
+                        return $this;<br>
+                      </div>
+                    }<br>
+                  </div>
+                }
+              </code>
+            </div>
+
+            <hr class="mt-4 mb-4">
+
+            <div class="sub-block ms-5">
+              <h5>Đối với những Entity có sẵn của "Ec-Cube"</h5>
+              <p>Tạo file trait trong thư mục "dist/app/Customize/Entity/ProductTrait.php"</p>
+              <div class="border rounded p-3 bg-light mb-3">
+                <code>
+                  namespace Customize\Entity;<br>
+                  <br>
+                  use Doctrine\ORM\Mapping as ORM;<br>
+                  use Eccube\Annotation\EntityExtension;<br>
+                  <br>
+                  /**<br>
+                  * @EntityExtension("Eccube\Entity\Product")<br>
+                  */<br>
+                  trait ProductTrait<br>
+                  {<br>
+                    <div class="ms-4">
+                      /* @ORM\Column(name="options", type="json", nullable=true) */<br>
+                      private $options;<br>
+                      <br>
+                      public function getOptions()<br>
+                      {<br>
+                        <div class="ms-4">return $this->options;<br></div>
+                      }<br>
+                      <br>
+                      public function setOptions($options)<br>
+                      {<br>
+                        <div class="ms-4">
+                          $this->options = $options;<br>
+                          return $this;<br>
+                        </div>
+                      }<br>
+                    </div>
+                  }
+                </code>
+              </div>
+              <p>Sau khi tạo trait, chạy command bên dưới để tạo file proxy</p>
+              <div class="border rounded p-3 bg-light mb-3">
+                bin/console eccube:generate:proxies
+              </div>
+            </div>
+
+            <hr class="mt-4 mb-4">
+
+
+            <p>Sau khi tạo Entity và Repository chạy command bên dưới để tạo file migrate</p>
+            <div class="border rounded p-3 bg-light mb-3">
+              bin/console make:migration
+            </div>
+
+            <p>Hệ thống tự động tạo 1 file mới trong thư mục "dist/app/DoctrineMigrations/Version{number}.php"<br>
+            Xoá những dòng không cần thiết, chỉ giữ lại những dòng liên quan</p>
+
+            <p>Chạy command bên dưới để cập nhật cơ sở dữ liệu</p>
+
+            <div class="border rounded p-3 bg-light mb-3">
+              bin/console doctrine:migrations:migrate 'DoctrineMigrations\Version{number}'
+            </div>
+
+          </div>
+
+          <hr class="mt-5 mb-5">
+
+          <div class="block" id="getdata">
+            <h3>6. Hiển thị dữ liệu</h3>
+  
+            <div class="border rounded p-3 bg-light mb-3">
+              <code>
+                namespace Customize\Controller;<br>
+                <br>
+                use Eccube\Controller\AbstractController;<br>
+                use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;<br>
+                use Symfony\Component\Routing\Annotation\Route;<br>
+                use Customize\Repository\FaqRepository;<br>
+                <br>
+                class FaqController extends AbstractController<br>
+                {<br>
+                 <div class="ms-4">
+                    protected $faqRepository;<br>
+                    <br>
+                    public function __construct(FaqRepository $faqRepository){<br>
+                      <div class="ms-4">$this->faqRepository = $faqRepository;<br></div>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * @Route("/faq", name="page_faq")<br>
+                    * @Template("faq.twig")<br>
+                    */<br>
+                    public function page_faq()<br>
+                    {<br>
+                      <div class="ms-4">
+                        $faqs = $this->faqRepository->findBy([], ['sort_no' => 'ASC']);<br>
+                        return array('Faqs' => $faqs);<br>
+                      </div>
+                    }<br>
+                 </div>
+                }
+              </code>
+            </div>
+            <div class="border rounded p-3 bg-light">
+              <code>
+                {% include 'Block/head.twig' %}<br>
+                &lt;link rel="stylesheet" href="{{ asset('assets/css/page/faq.min.css') }}"&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;body id="faq" class="faq"&gt;<br>
+                  <div class="ms-4">
+                    {% include 'Block/header.twig' %}<br>
+                    &lt;div id="wrap"&gt;<br>
+                    <div class="ms-4">
+                    {% if Faqs|length > 0 %}<br>
+                      <div class="ms-4">
+                        {% for faq in Faqs %}<br>
+                        &lt;dl&gt;<br>
+                          <div class="ms-4">
+                            &lt;dt&gt;{{ faq.title }}&lt;/dt&gt;<br>
+                            &lt;dd&gt;{{ faq.content|nl2br }}&lt;/dd&gt;<br>
+                          </div>
+                        &lt;/dl&gt;<br>
+                        {% endfor %}<br>
+                      </div>
+                    {% endif %}
+                    </div>
+                    &lt;/div&gt;<br>
+                    {% include 'Block/footer.twig' %}<br>
+                  </div>
+                &lt;body&gt;<br>
+                &lt;/html&gt;
+              </code>
+            </div>
+          </div>
+
+          <hr class="mt-5 mb-5">
+
+          <div class="block" id="product">
+            <h3>6. Product</h3>
+            <p>Relationship</p>
+            <div class="border rounded p-3 mb-3">
+              <img loading="lazy" src="./assets/img/product-table.jpg" width="1050" height="656" alt="">
+            </div>
+            <div class="border rounded p-3 mb-3">
+              <img loading="lazy" src="./assets/img/product-db-relationship.png" width="1017" height="883" alt="">
+            </div>
+
+            <p>Nhánh Product Class</p>
+            
           </div>
         </div>
       </div>
